@@ -1,0 +1,54 @@
+<!doctype html>
+
+<style type="text/css">
+input { display: block; }
+</style>
+
+<main>
+  <form onsubmit="return false;">
+    <input name="name" placeholder="name">
+    <input name="url" placeholder="url">
+    <input name="totalTime" placeholder="total time">
+    <input name="recipeYield" placeholder="recipe yield">
+    <textarea name="ingredients" rows="10" cols="40">ingredients.  one per line.</textarea>
+    <input type="submit" onclick="handleSubmit()">
+  </form>
+  <pre id="result"></pre>
+</main>
+
+<script id="template" type="text/x-handlebars-template">
+  <meta property="og:site_name" content="hancancook.com" />
+  <div itemscope itemtype="http://schema.org/Recipe">
+    <h1 itemprop="name">{{name}}</h1>
+    <meta itemprop="url" content="{{url}}" />
+    <span itemprop="totalTime">{{totalTime}}</span>
+    <span itemprop="recipeYield">{{recipeYield}}</span>
+
+    Ingredients:
+    {{#each ingredients}}
+      <span itemprop="ingredients">{{this}}</span>
+    {{/each}}
+  </div>
+</script>
+
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
+
+<script type="text/javascript">
+function handleSubmit() {
+  var source = $("#template").html();
+  var template = Handlebars.compile(source);
+  var elements = document.forms[0].elements;
+
+  var context = {
+    name: elements.name.value,
+    url: elements.url.value,
+    totalTime: elements.totalTime.value,
+    recipeYield: elements.recipeYield.value,
+    ingredients: elements.ingredients.value.split('\n')
+  };
+
+  var markup = template(context);
+  $("#result").text(markup);
+}
+</script>
