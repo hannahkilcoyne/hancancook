@@ -11,23 +11,30 @@ input { display: block; }
     <input name="totalTime" placeholder="total time">
     <input name="recipeYield" placeholder="recipe yield">
     <textarea name="ingredients" rows="10" cols="40">ingredients.  one per line.</textarea>
+    <textarea name="instructions" rows="10" cols="40">instructions.</textarea>
     <input type="submit" onclick="handleSubmit()">
   </form>
   <pre id="result"></pre>
 </main>
 
 <script id="template" type="text/x-handlebars-template">
-  <meta property="og:site_name" content="hancancook.com" />
   <div itemscope itemtype="http://schema.org/Recipe">
+    <style type="text/css">
+    ul.ingredients { list-style-type: none; padding-left: 0; }
+    </style>
+  
     <h1 itemprop="name">{{name}}</h1>
     <meta itemprop="url" content="{{url}}" />
     <span itemprop="totalTime">{{totalTime}}</span>
     <span itemprop="recipeYield">{{recipeYield}}</span>
 
-    Ingredients:
+    <ul class="ingredients">
     {{#each ingredients}}
-      <span itemprop="ingredients">{{this}}</span>
+      <li><span itemprop="ingredients">{{this}}</span></li>
     {{/each}}
+    </ul>
+    
+    <div itemprop="recipeInstructions">{{instructions}}</div>
   </div>
 </script>
 
@@ -45,7 +52,8 @@ function handleSubmit() {
     url: elements.url.value,
     totalTime: elements.totalTime.value,
     recipeYield: elements.recipeYield.value,
-    ingredients: elements.ingredients.value.split('\n')
+    ingredients: elements.ingredients.value.split('\n'),
+    instructions: elements.instructions.value
   };
 
   var markup = template(context);
