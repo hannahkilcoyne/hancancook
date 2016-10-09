@@ -40,7 +40,7 @@ input, textarea { display: block; }
 
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.3/showdown.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.6/marked.min.js"></script>
 
 <script type="text/javascript">
 function handleSubmit() {
@@ -54,13 +54,9 @@ function handleSubmit() {
     totalTime: elements.totalTime.value,
     recipeYield: elements.recipeYield.value,
     ingredients: elements.ingredients.value.split('\n'),
-    instructions: (function() {
-      var converter = new showdown.Converter();
-      return converter.makeHtml(elements.instructions.value);  
+    instructions: marked(elements.instructions.value)
     })()
   };
-  
-  
 
   var markup = template(context);
   $("#result").text(markup);
