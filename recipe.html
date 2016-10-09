@@ -12,7 +12,6 @@ input, textarea { display: block; }
     <input name="recipeYield" placeholder="recipe yield">
     <textarea name="ingredients" rows="10" cols="40">ingredients.  one per line.</textarea>
     <textarea name="instructions" rows="10" cols="40">instructions.</textarea>
-    <input type="submit" onclick="handleSubmit()">
   </form>
   <pre id="result"></pre>
 </main>
@@ -43,7 +42,7 @@ input, textarea { display: block; }
 <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.6/marked.min.js"></script>
 
 <script type="text/javascript">
-function handleSubmit() {
+function render() {
   var source = $("#template").html();
   var template = Handlebars.compile(source);
   var elements = document.forms[0].elements;
@@ -61,5 +60,5 @@ function handleSubmit() {
   $("#result").text(markup);
 }
 
-$('input, textarea').blur(handleSubmit)
+$('input, textarea').keypress(render)
 </script>
