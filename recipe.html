@@ -55,7 +55,6 @@ function handleSubmit() {
     recipeYield: elements.recipeYield.value,
     ingredients: elements.ingredients.value.split('\n'),
     instructions: marked(elements.instructions.value)
-    })()
   };
 
   var markup = template(context);
