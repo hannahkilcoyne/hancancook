@@ -60,4 +60,6 @@ function handleSubmit() {
   var markup = template(context);
   $("#result").text(markup);
 }
+
+$('input, textarea').blur(handleSubmit)
 </script>
